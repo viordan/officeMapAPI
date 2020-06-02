@@ -5,14 +5,30 @@ const pointSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  subscribedToChannel: {
-    type: String,
-    required: true
-  },
-  subscribeDate: {
-    type: Date,
+  x: {
+    type: Number,
     required: true,
-    default: Date.now
+    default: 0
+  },
+  y: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  capacity: {
+    type: Number,
+    required: true,
+    default: -1
+  },
+  zoom: {
+    type: String,
+    required: true,
+    default: 'none'
+  },
+  floor: {
+    type: String,
+    required: true,
+    default: 'First FLoor'
   }
 })
 

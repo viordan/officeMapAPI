@@ -21,7 +21,12 @@ router.get('/:id', getPoint, (req, res) => {
 router.post('/', async (req, res) => {
   const point = new Point({
     name: req.body.name,
-    subscribedToChannel: req.body.subscribedToChannel
+    x: req.body.x,
+    y: req.body.y,
+    capacity: req.body.capacity,
+    zoom: req.body.zoom,
+    floor: req.body.floor,
+    
   })
   try {
     const newPoint = await point.save()
@@ -36,8 +41,20 @@ router.patch('/:id', getPoint, async (req, res) => {
   if (req.body.name != null) {
     res.point.name = req.body.name
   }
-  if (req.body.subscribedToChannel != null) {
-    res.point.subscribedToChannel = req.body.subscribedToChannel
+  if (req.body.x != null) {
+    res.point.x = req.body.x
+  }
+  if (req.body.y != null) {
+    res.point.y = req.body.y
+  }
+  if (req.body.capacity != null) {
+    res.point.capacity = req.body.capacity
+  }
+  if (req.body.zoom != null) {
+    res.point.zoom = req.body.zoom
+  }
+  if (req.body.floor != null) {
+    res.point.floor = req.body.floor
   }
   try {
     const updatedPoint = await res.point.save()
@@ -51,7 +68,7 @@ router.patch('/:id', getPoint, async (req, res) => {
 router.delete('/:id', getPoint, async (req, res) => {
   try {
     await res.point.remove()
-    res.json({ message: 'Deleted Subscriber' })
+    res.json({ message: 'Deleted Point' })
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
@@ -62,7 +79,7 @@ async function getPoint(req, res, next) {
   try {
     point = await Point.findById(req.params.id)
     if (point == null) {
-      return res.status(404).json({ message: 'Cannot find subscriber' })
+      return res.status(404).json({ message: 'Cannot find point' })
     }
   } catch (err) {
     return res.status(500).json({ message: err.message })
