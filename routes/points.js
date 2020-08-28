@@ -36,6 +36,16 @@ router.post('/', async (req, res) => {
   }
 })
 
+router.post('/insert', async (req, res) => {
+  try {
+    await Point.insertMany(req)
+    res.status(201).json({ message: 'All Done!' })
+  } catch (err) {
+    res.status(400).json({ message: err.message })
+  }
+})
+
+
 // Updating One
 router.patch('/:id', getPoint, async (req, res) => {
   if (req.body.name != null) {
@@ -74,6 +84,17 @@ router.delete('/:id', getPoint, async (req, res) => {
   }
 })
 
+// Deleting All
+router.delete('/deleteall/', async (req, res) => {
+  try {
+    const points = new Point.find()
+    await points.deleteMany({}, callback)
+    res.json({ message: 'Deleted All' })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
 async function getPoint(req, res, next) {
   let point
   try {
@@ -88,5 +109,7 @@ async function getPoint(req, res, next) {
   res.point = point
   next()
 }
+
+
 
 module.exports = router
