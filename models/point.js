@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const pointSchema = new mongoose.Schema({
+  tag: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true
